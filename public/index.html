@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Run Shell Script</title>
+</head>
+<body>
+    <h1>Run Shell Script with Arguments</h1>
+    <form id="script-form">
+        <label for="arg1">Argument 1:</label>
+        <input type="text" id="arg1" name="arg1"><br><br>
+        <label for="arg2">Argument 2:</label>
+        <input type="text" id="arg2" name="arg2"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <button type="submit">Run Script</button>
+    </form>
+    <pre id="output"></pre>
+    <script>
+        document.getElementById('script-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const arg1 = document.getElementById('arg1').value;
+            const arg2 = document.getElementById('arg2').value;
+            const password = document.getElementById('password').value;
+            const response = await fetch('/run-script', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ arg1, arg2 })
+            });
+
+            const result = await response.text();
+            document.getElementById('output').textContent = result;
+        });
+    </script>
+</body>
+</html>
